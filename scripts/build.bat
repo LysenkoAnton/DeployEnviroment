@@ -1,0 +1,1 @@
+MSBuild C:\GameStore\GameStrore.WebUI\gamestore.webui.csproj /p:deployonbuild=true;publishprofile=C:\GameStore\GameStrore.WebUI\Properties\PublishProfiles\folderprofile.pubxml

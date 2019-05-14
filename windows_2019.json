@@ -1,0 +1,117 @@
+{
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "iso_url": "{{user `iso_url`}}",
+      "iso_checksum_type": "{{user `iso_checksum_type`}}",
+      "iso_checksum": "{{user `iso_checksum`}}",
+      "headless": true,
+      "boot_wait": "4m",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_wait_timeout": "1h",
+      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+      "guest_os_type": "Windows2016_64",
+      "disk_size": 65536,
+      "floppy_files": [
+        "{{user `autounattend`}}",
+        "./scripts/openssh.ps1"
+      ],
+      "vboxmanage": [
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--memory",
+          "4096"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--cpus",
+          "4"
+        ]
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "remote_path": "/tmp/script.bat",
+      "execute_command": "{{.Vars}} cmd /c C:/Windows/Temp/script.bat",
+      "scripts": [
+        "./scripts/vm-guest-tools.bat",
+        "./scripts/enable-rdp.bat"
+      ]
+    },
+    {
+      "type": "file",
+      "source": "InstallPack.zip",
+      "destination": "c:/"
+    },
+    {
+      "type": "powershell",
+      "script": "scripts/ExpandInstallPack.ps1"
+    },
+    {
+      "type": "powershell",
+      "script": "scripts/IisUpConfig.ps1"
+    },
+    {
+      "type": "powershell",
+      "script": "scripts/InstallDotNet.ps1"
+    },
+    {
+      "type": "windows-restart"
+    },
+    {
+      "type": "powershell",
+      "script": "scripts/InstallSql.ps1"
+    },
+    {
+      "type": "powershell",
+      "script": "scripts/InstallGit.ps1"
+    },
+    {
+      "type": "powershell",
+      "script": "scripts/InstallMSBuild.ps1"
+    },
+    {
+      "type": "windows-restart"
+    },
+    {
+      "type": "powershell",
+      "script": "scripts/LoadSource.ps1"
+    },
+    {
+      "type": "powershell",
+      "script": "scripts/UpdateDB.ps1"
+    },
+    {
+      "type": "windows-shell",
+      "script": "scripts/UpdateApp.bat"
+    },
+    {
+      "type": "shell",
+      "remote_path": "/tmp/script.bat",
+      "execute_command": "{{.Vars}} cmd /c C:/Windows/Temp/script.bat",
+      "scripts": [
+        "./scripts/disable-auto-logon.bat"
+      ]
+    }
+  ],
+
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "keep_input_artifact": false,
+      "output": "windows_2019_{{.Provider}}.box",
+      "vagrantfile_template": "vagrantfile-windows_2019.template"
+    }
+  ],
+  "variables": {
+    "iso_url": "./17763.379.190312-0539.rs5_release_svc_refresh_SERVER_EVAL_x64FRE_en-us.ISO",
+    "iso_checksum_type": "md5",
+    "iso_checksum": "22ad0e83e20af5233a6ff453e6e257df",
+    "autounattend": "./Autounattend.xml"
+  }
+}

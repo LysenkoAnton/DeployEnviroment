@@ -1,0 +1,9 @@
+*.exe
+*.msi
+*.msu
+*.vdi
+*.zip
+*.box
+.vagrant
+*.iso
+packer_cache
