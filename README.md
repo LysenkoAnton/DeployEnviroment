@@ -31,22 +31,23 @@ This source organizes creating, preparing configuration and deploying identical 
 * Used Virtual Box 6.0.6
 
 # How start
-1. Clone this repo to local directory
-2. Download the Windows Server 2019 (x64) iso
-3. Find out the MD5 hash of iso
-4. Move iso to cloned directory
-5. Download the Microsoft SQL Server and move .exe to cloned directory in folder "InstallSQL"
-6. Download the Microsoft Build Tools and move .exe to cloned directory in folder "InstallMSBuild"
-7. Download the Microsoft Build Tools and move .exe to cloned directory in folder "InstallGit"
-8. Run 
+1. Clone this repo to local directory.
+2. Download the Windows Server 2019 iso.
+3. Find out the MD5 hash of iso.
+4. Move iso to cloned directory.
+5. Download the Microsoft SQL Server and move .exe to cloned directory in folder "InstallSQL".
+6. Download the Microsoft Build Tools and move .exe to cloned directory in folder "InstallMSBuild".
+7. Download the Microsoft Build Tools and move .exe to cloned directory in folder "InstallGit".
+8. Compress archive "InstallPack.zip" that include folders: "InstallSQL","InstallMSBuild","InstallGit". 
+8. Run:
 
  >packer build windows_2019.json
 
 When operations finised you can build box and deploy image by Vagrant:
-9. Run
+9. Run:
 
  > vagrant init <name of you'r box>
  > vagrant up
 
-10. Wait while you'r VM is preparing
-11. Using you'r VM
+10. Wait while your VM is preparing.
+11. Use your VM.
