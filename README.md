@@ -1,4 +1,4 @@
-# Creating virtual deployment enviroment for deploy web application
+# Creating virtual deployment enviroment for deploying web application
 ## What is it?
 This source organizes creating, preparing configuration and deploying identical machine images on base Windows Server for Vagrant by Packer.
 
