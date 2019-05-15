@@ -9,7 +9,7 @@ This source organizes creating, preparing configuration and deploying identical 
 >https://www.packer.io/docs/index.html
 
 ## Vagrant
-* Used Vagrant 2.2.4/n
+* Used Vagrant 2.2.4
 * Vagrant is a tool for building and managing virtual machine environments in a single workflow.
 * For additinally information follow the link:
 >https://www.vagrantup.com/docs/index.html
